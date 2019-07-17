@@ -48,14 +48,47 @@
             </svg>
           </a>
         </div>
-        <div class="nhsuk-header__content" id="content-header">
-          <div class="nhsuk-header__menu">
-            <button class="nhsuk-header__menu-toggle" id="toggle-menu" aria-controls="header-navigation" aria-label="Open menu">Menu</button>
+      </nav>
+      <!-- END nav -->
+    </header>
+	  <main> 
+      {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">hearth health limited</h2>
+              <p>Helping patients prepare for consutlation.</p>
+            </div>
+            <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
+              <li class="ftco-animate"><a href="https://twitter.com/hearth_health?lang=en"><span class="icon-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="https://www.instagram.com/hearth_health/"><span class="icon-instagram"></span></a></li>
+            </ul>
           </div>
-          
+          <div class="col-md-2">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Quick Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="/about" class="py-2 d-block">About</a></li>
+                <li><a href="/contact" class="py-2 d-block">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4 pr-md-4">
+          </div>
+ 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
           </div>
         </div>
       </div>
+
       <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation" aria-labelledby="label-navigation">
         <p class="nhsuk-header__navigation-title">
           <span id="label-navigation">Menu</span>

@@ -9,6 +9,10 @@ history = dict()
 def main():
     return render_template("index.html")
 
+@application.route("/account")
+def account():
+    return render_template("account.html")
+
 @application.route("/basicchat")
 def basicchat():
     return render_template("basicchat.html")
