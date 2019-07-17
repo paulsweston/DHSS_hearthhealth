@@ -31,8 +31,8 @@ def save_answer_to_bucket():
         csv_array.append('{0},{1},{2}'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
 
     filename = '{0}-input.csv'.format(str(uuid.uuid4()))
-    response = report_bucket.write_file(filename, '\n'.join(csv_array))
-    print(response)
+    #response = report_bucket.write_file(filename, '\n'.join(csv_array))
+    return filename
 
 @application.route("/report")
 def report():

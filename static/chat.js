@@ -7,7 +7,7 @@ function addQuestionToChat(question) {
     vcard.innerHTML = op;
     vcard.className = 'vcard bio';
     const rep = document.createElement('div');
-    rep.innerHTML = `${question}?`;
+    rep.innerHTML = question;
     rep.className = 'comment-body';
     const res = document.createElement('li');
     res.className = 'comment';
@@ -36,13 +36,17 @@ function addAnswerToChat(message) {
     document.querySelector('#messages').append(li);
 }
 
+function getQuestion() {
+    return `${questions[questionNumber].question}?`
+}
+
 function initQuestions() {
     const request = new XMLHttpRequest()
     request.open('GET', '/questions')
 
     request.onload = () => {
         questions = JSON.parse(request.responseText)
-        addQuestionToChat(questions[questionNumber].question)
+        addQuestionToChat(getQuestion())
     }
 
     request.send()
@@ -51,6 +55,12 @@ function initQuestions() {
 function submitAnswers() {
     const request = new XMLHttpRequest()
     request.open('POST', '/answers')
+
+    request.onload = () => {
+        var linkToReport = `<a href="/report">${request.responseText}</a>`
+        addQuestionToChat(linkToReport)
+    }
+
     request.send(JSON.stringify(questions))
 }
 
@@ -65,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.value = ''
         questionNumber += 1
         if (questionNumber < questions.length) {
-            addQuestionToChat(questions[questionNumber].question)
+            addQuestionToChat(getQuestion())
         }
         else {
             submitAnswers()
