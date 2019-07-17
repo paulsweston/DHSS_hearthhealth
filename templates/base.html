@@ -98,11 +98,13 @@
 </header>
 {% block hero %}{% endblock %}
 
-	  <main class="nhsuk-width-container"> 
+	<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
       {% block content %}{% endblock %}
     </main>
-    
-    <footer role="contentinfo">
+  </div>
+      
+  <footer role="contentinfo">
   <div class="nhsuk-footer" id="nhsuk-footer">
     <div class="nhsuk-width-container">
       <h2 class="nhsuk-u-visually-hidden">Support links</h2>
