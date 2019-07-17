@@ -1,5 +1,78 @@
+var questionNumber = 0
+var questions = []
+
+function addQuestionToChat(question) {
+    const vcard = document.createElement('div');
+    var op = '<img src="/static/images/hh-logo.jpg" class="logo" alt="hh">';
+    vcard.innerHTML = op;
+    vcard.className = 'vcard bio';
+    const rep = document.createElement('div');
+    rep.innerHTML = `${question}?`;
+    rep.className = 'comment-body';
+    const res = document.createElement('li');
+    res.className = 'comment';
+    res.appendChild(rep);
+    res.appendChild(vcard);
+
+    //Add message to chat list
+    document.querySelector('#messages').append(res);
+    var elemnt = document.getElementById("send")
+    elemnt.scrollIntoView(false);
+}
+
+function addAnswerToChat(message) {
+    const hcard = document.createElement('div');
+    var user = '<img src="/static/images/person_1.jpg" class="logo" alt="user">';
+    hcard.innerHTML = user;
+    hcard.className = 'hcard bio';
+    const body = document.createElement('div');
+    body.innerHTML = message;
+    body.className = 'reply-body';
+    const li = document.createElement('li');
+    li.className = 'comment';
+    li.appendChild(hcard);
+    li.appendChild(body);
+
+    document.querySelector('#messages').append(li);
+}
+
+function initQuestions() {
+    const request = new XMLHttpRequest()
+    request.open('GET', '/questions')
+
+    request.onload = () => {
+        questions = JSON.parse(request.responseText)
+        addQuestionToChat(questions[questionNumber].question)
+    }
+
+    request.send()
+}
+
+function submitAnswers() {
+    const request = new XMLHttpRequest()
+    request.open('POST', '/answers')
+    request.send(JSON.stringify(questions))
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    
+    initQuestions()
+
+    document.querySelector('#send').onclick = () => {
+        const textarea = document.querySelector('#message')
+        var answer = textarea.value
+        questions[questionNumber]['answer'] = answer
+        addAnswerToChat(answer)
+        textarea.value = ''
+        questionNumber += 1
+        if (questionNumber < questions.length) {
+            addQuestionToChat(questions[questionNumber].question)
+        }
+        else {
+            submitAnswers()
+        }
+    }
+
+        /*
     // Set session question number
     var qno = 1;
 
@@ -16,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         else
             document.querySelector('#send').disabled = true;
     };
-    
+
     document.querySelector('#form').onsubmit = () => {
         const message = document.querySelector('#message').value;
-        
+
         // Create a new line item for the message
-        
+
         const hcard = document.createElement('div');
         var user = '<img src="/static/images/person_1.jpg" class="logo" alt="user">';
         hcard.innerHTML = user;
@@ -67,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elemnt.scrollIntoView(false);
 
         }
-        
+
         // Add data to send with request
         const data = new FormData();
         data.append('message', message);
@@ -76,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Send request
         request.send(data);
-    
+
         //Clear field
         document.querySelector('#message').value = '';
         // Disable the send button
@@ -85,5 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         qno ++;
         return false;
     };
-    
+    */
+
 });

@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, render_template, request
-import linecache
-import boto3
-import pandas as pd
-import io
+from bucket import Bucket
+import json
+import uuid
 
 application = Flask(__name__)
 
 history = dict()
+
+report_bucket = Bucket()
 
 @application.route("/")
 def main():
@@ -16,28 +17,18 @@ def main():
 def basicchat():
     return render_template("basicchat.html")
 
-@application.route("/chat", methods=['POST'])
-def chat():
+@application.route("/answers", methods=['POST'])
+def save_answer_to_bucket():
+    data = json.loads(request.data)
+    csv_array = [
+        'Title,Question,Answers'
+    ]
+    for item in data:
+        csv_array.append('{0},{1},{2}'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
 
-    qno = int(request.form.get("qno"))
-    question = request.form.get("question")
-    message = request.form.get("message")
-
-    # Add data to history
-    if qno !=1:
-        history[qno]= {"question": question, "message": message}
-
-    response = linecache.getline('chatq.txt', qno)
+    filename = '{0}-input.csv'.format(str(uuid.uuid4()))
+    response = report_bucket.write_file(filename, '\n'.join(csv_array))
     print(response)
-    response = response.rstrip('\n')
-
-    s3 = boto3.resource('s3')
-
-    obj = s3.Object('hearth-health-report', 'test.csv')
-    report = obj.get()['body'].read()
-    regex_data = pd.read_csv(io.BytesIO(report), header=0, delimiter=",", low_memory=False)
-
-    return jsonify({"response": regex_data.head(10)})
 
 @application.route("/report")
 def report():
@@ -46,6 +37,12 @@ def report():
 @application.route("/newreport", methods=['GET'])
 def newreport():
     return jsonify({"response": history})
+
+@application.route('/questions', methods=['GET'])
+def send_questions_to_client():
+    with open('./questions.json', 'r') as f:
+        questions = f.read()
+        return questions
 
 if __name__ == "__main__":
     application.run()
