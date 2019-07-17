@@ -37,7 +37,7 @@ function addAnswerToChat(message) {
 }
 
 function getQuestion() {
-    return `${questions[questionNumber].question}?`
+    return `${questions[questionNumber].question}`
 }
 
 function initQuestions() {

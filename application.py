@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-import boto3 
+import boto3
 import io
 import pandas as pd
 from bucket import Bucket
@@ -31,10 +31,10 @@ def save_answer_to_bucket():
         'Title,Question,Answers'
     ]
     for item in data:
-        csv_array.append('{0},{1},{2}'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
+        csv_array.append('"{0}","{1}","{2}"'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
 
     filename = '{0}-input.csv'.format(str(uuid.uuid4()))
-    #response = report_bucket.write_file(filename, '\n'.join(csv_array))
+    response = report_bucket.write_file(filename, '\n'.join(csv_array))
     return filename
 
 @application.route("/report")

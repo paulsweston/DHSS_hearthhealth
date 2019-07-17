@@ -1,9 +1,8 @@
 [
     {
-        "title":"Date / Time",
+        "title":"Appointment Time",
         "question": "When is your appointment?",
-        "answer":""
-
+        "answer": ""
     },
     {
         "title":"Location",
@@ -12,7 +11,7 @@
     },
     {
         "title":"Opening",
-        "question": "Let’s talk about why you are going, is that OK?",
+        "question": "Let us talk about why you are going, is that OK?",
         "answer":""
     },
     {
