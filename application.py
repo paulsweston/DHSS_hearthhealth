@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, render_template, request
 import linecache
+import boto3 
+import io
+import pandas as pd
 
 application = Flask(__name__)
 
@@ -35,10 +38,18 @@ def chat():
 
 @application.route("/report")
 def report():
-    return render_template("report.html")
+     return render_template("report.html")
 
 @application.route("/newreport", methods=['GET'])
 def newreport():
+    s3 = boto3.resource('s3')
+    obj = s3.Object('hearth-health-report','51d4bcb0-a892-11e9-9087-abfdcf97b62d.csv')
+    in_file = obj.get()['Body'].read()
+    data_df = pd.read_csv(io.BytesIO(in_file), header=0, delimiter=",", low_memory=False)
+    data_df=data_df.dropna();
+    for index, row in data_df.iterrows():
+        print(row['Title'], row['Question'])
+        history[index]= {"title": row['Title'],"question": row['Question'], "message":  row['Answers']}
     return jsonify({"response": history})
 
 if __name__ == "__main__":

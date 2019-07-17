@@ -6,7 +6,7 @@ function newload() {
         var data = data['response'];
         const keys = Object.values(data)
         for (const key of keys) {
-            var question = JSON.stringify(key['question']);
+            var question = JSON.stringify(key['title']);
             question = question.replace('"', '');
             question = question.replace('"', '');
             h2 = document.createElement('h2');
