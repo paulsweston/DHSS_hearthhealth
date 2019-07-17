@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}report{% endblock %}
-{% block js %}<script src="{{ url_for('static', filename='report.js') }}"></script>{% endblock %}
 {% block content %}
 
 <section class="ftco-section ftco-degree-bg">
@@ -8,15 +7,13 @@
         <div class="row">
             <!--Add report items dymanically from report.js-->
             <div id="report" class="col-md-8 ftco-animate fadInUpftco-animated report">
-                <h2>Consultation Notes</h2>                
+                <h2>Consultation Notes</h2>
+                {% for result in results %}
+                    <h2 class="question">{{ result.title }}</h2>
+                    <p class="answer">{{ result.message }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
-
-
-<script type="text/javascript">
-    newload('report');
-</script>
 {% endblock %}
-    

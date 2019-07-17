@@ -57,7 +57,8 @@ function submitAnswers() {
     request.open('POST', '/answers')
 
     request.onload = () => {
-        var linkToReport = `<a href="/report">${request.responseText}</a>`
+        var fileId = request.responseText
+        var linkToReport = `<a href="/report?id=${fileId}">View your report</a>`
         addQuestionToChat(linkToReport)
     }
 
