@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
-{% block content %}
-    
-  
-    
-<div class="nhsuk-hero nhsuk-hero--image nhsuk-hero--image-description" style="background-image: url(/static/images/care-check-checkup.jpg);" data-stellar-background-ratio="1">
+{% block hero %} <div class="nhsuk-hero nhsuk-hero--image nhsuk-hero--image-description" style="background-image: url(/static/images/care-check-checkup.jpg);" data-stellar-background-ratio="1">
 	<div class="overlay"></div>
 	<div class="container-fluid">
 	  <div class="row no-gutters d-flex slider-text align-items-center justify-content-center" data-scrollax-parent="true">
@@ -16,6 +12,11 @@
 	  </div>
 	</div>
   </div>
+{% endblock %}
+
+{% block content %}
+    
+  
 
   <section class="ftco-section ftco-services">
 	<div class="container">
