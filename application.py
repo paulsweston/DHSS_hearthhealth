@@ -24,11 +24,12 @@ def account():
     reports = bucket.objects.all()
     output = []
     for report in reports:
-        report_title = report.key.split("_", 1)[0]
-        output.append({
-            'title': report_title,
-            'link': report.key.replace('.csv', '')
-        })
+        if ".png" not in report.key:
+            report_title = report.key.split("_", 1)[0]
+            output.append({
+                'title': report_title,
+                'link': report.key.replace('.csv', '')
+            })
     return render_template("account.html", reports=output)
 
 @application.route("/basicchat")
