@@ -30,28 +30,25 @@ class LanguageProcessor(object):
 
         for word in data:
             if word[0] not in stopWords:
-                if ('.' not in word[1]) or ('!' not in word[1]):
+                if ('.' not in word[1]) and ('!' not in word[1]) and not word[1].startswith('@') and not word[1].startswith('#') and not word[1].startswith('.')and not word[1].startswith("'") and not word[1].startswith(','):
                     wordsFiltered.append(ps.stem(word[0]))
 
         self._save_word_cloud(wordsFiltered, filepath, 'white')
 
 
+
     def _save_word_cloud(self, data, filepath, color='black'):
-        words = ' '.join(data)
-        cleaned_word = " ".join([word for word in words.split()
-                                if 'http' not in word
-                                    and not word.startswith('@')
-                                    and not word.startswith('#')
-                                    and not word.startswith('.')
-                                    and not word.startswith("'")
-                                    and not word.startswith(',')
-                                    and word != 'RT'
-                                ])
+        fdist = nltk.FreqDist(data)
+
+        word_dict={}
+        for word, frequency in fdist.most_common(50):
+            word_dict[word]=frequency
         wordcloud = WordCloud(stopwords=STOPWORDS,
                         background_color=color,
                         width=2500,
                         height=2000
-                        ).generate(cleaned_word)
+                        )
+        wordcloud.fit_words(word_dict)
         f = figure.Figure( figsize =(7,7) )
         plt.imshow(wordcloud)
         plt.axis('off')
