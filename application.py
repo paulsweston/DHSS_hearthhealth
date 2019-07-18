@@ -5,6 +5,7 @@ import pandas as pd
 from bucket import Bucket
 import json
 import uuid
+import datetime
 
 application = Flask(__name__)
 
@@ -31,8 +32,10 @@ def save_answer_to_bucket():
     for item in data:
         csv_array.append('"{0}","{1}","{2}"'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
 
-    file_id = str(uuid.uuid4())
-    filename = '{0}-input.csv'.format(file_id)
+
+    date = datetime.datetime.now().strftime('%Y-%m-%d')
+    file_id = '{0}_{1}'.format(date, str(uuid.uuid4()))
+    filename = '{0}.csv'.format(file_id)
     response = report_bucket.write_file(filename, '\n'.join(csv_array))
     return file_id
 
@@ -42,7 +45,7 @@ def report():
     results = []
     if file_id:
         s3 = boto3.resource('s3')
-        obj = s3.Object('hearth-health-report','{0}-input.csv'.format(file_id))
+        obj = s3.Object('hearth-health-report','{0}.csv'.format(file_id))
         in_file = obj.get()['Body'].read()
         data_df = pd.read_csv(io.BytesIO(in_file), header=0, delimiter=",", low_memory=False)
         data_df=data_df.dropna();
