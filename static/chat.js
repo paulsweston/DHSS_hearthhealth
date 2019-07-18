@@ -67,7 +67,7 @@ class Chat {
         res.className = 'comment';
         res.appendChild(rep);
         res.appendChild(vcard);
-        
+
         //Add message to chat list
         document.querySelector('#messages').append(res);
         var elemnt = document.getElementById("send")
@@ -87,9 +87,9 @@ class Chat {
         li.className = 'comment';
         li.appendChild(hcard);
         li.appendChild(body);
-        
+
         //Check the input value
-     
+
         document.querySelector('#messages').append(li);
     }
 
@@ -102,23 +102,22 @@ class Chat {
 document.addEventListener('DOMContentLoaded', () => {
     const chat = new Chat()
     chat.initQuestions()
-    chat.chatbox.disabled = true
     document.querySelector('#send').onclick = () => {
         chat.saveUserInput()
     }
 
     document.querySelector('#message').addEventListener('keydown', (event) => {
-    var input = document.getElementById('message');
+        var input = document.getElementById('message');
         if (event.keyCode === 13 && input.value.length > 1) {
-        
             chat.saveUserInput()
         }
 
         if (input.value.length > 1){
-        document.querySelector('#send').disabled = false
+            document.querySelector('#send').disabled = false
         }
-        else {document.querySelector('#send').disabled = true
-}
-        
+        else {
+            document.querySelector('#send').disabled = true
+        }
+
     })
 });
