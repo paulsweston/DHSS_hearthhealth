@@ -12,8 +12,7 @@ application = Flask(__name__)
 
 report_bucket = Bucket()
 formatter = Formatter()
-language_processor = LanguageProcessor()
-sentiment = SentimentAnalyzer()
+
 
 @application.route("/")
 def main():
@@ -59,13 +58,15 @@ def report():
     file_id = request.args.get('id')
     results = []
     if file_id:
+        language_processor = LanguageProcessor()
+        sentiment_analyzer = SentimentAnalyzer()
         filename = '{0}.csv'.format(file_id)
         wordcloud = '{0}.png'.format(file_id)
-        sentiment_file = '{0}-sentiment.png'.format(file_id)
+        sentiment_file = '{0}-sentiment.jpg'.format(file_id)
         results = report_bucket.read_file(filename)
         answers = formatter.format_answers(results)
         language_processor.generate_word_cloud(answers, wordcloud)
-        sentiment.generate_sentiment_graph(answers, sentiment_file)
+        sentiment_analyzer.generate_sentiment_graph(answers, sentiment_file)
         report_bucket.upload_file(wordcloud)
         report_bucket.upload_file(sentiment_file)
     return render_template("report.html", results=results, file=file_id)

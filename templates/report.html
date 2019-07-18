@@ -4,10 +4,10 @@
 
 <section class="ftco-section ftco-degree-bg">
     <div class="container">
+        <h2>Consultation Notes</h2>
         <div class="row">
             <!--Add report items dymanically from report.js-->
             <div id="report" class="col-md-8 ftco-animate fadInUpftco-animated report">
-                <h2>Consultation Notes</h2>
                 {% for result in results %}
                     {% if result.title != 'Opening' %}
                         <h2 class="question">{{ result.title }}</h2>
@@ -19,7 +19,7 @@
                 <h2 class="question">Word Cloud</h2>
                 <img width="400px" height="320px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}.png" />
                 <h2 class="question">Sentiment Graph</h2>
-                <img width="400px" height="320px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}-sentiment.png" />
+                <img width="400px" height="320px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}-sentiment.jpg" />
             </div>
         </div>
     </div>

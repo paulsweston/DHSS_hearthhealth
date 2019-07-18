@@ -18,7 +18,7 @@ class SentimentAnalyzer(object):
         sizes = [score['neg'], score['neu'], score['pos']]
         sen_plt.pie(sizes,explode=self.explode,labels=self.labels,colors=self.colors, autopct='%1.1f%%', shadow=True, startangle=140)
         sen_plt.axis('equal')
-        circle=sen_plt.Circle( (0,0), 0.7, color='white')
-        p = sen_plt.gcf()
-        p.gca().add_artist(circle)
+        #circle=sen_plt.Circle( (0,0), 0.7, color='white')
+        #p = sen_plt.gcf()
+        #p.gca().add_artist(circle)
         sen_plt.savefig(filename)
