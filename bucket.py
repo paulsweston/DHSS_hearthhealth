@@ -1,5 +1,6 @@
 import boto3
 import io
+import pandas as pd
 
 class Bucket(object):
     def __init__(self):
@@ -11,7 +12,11 @@ class Bucket(object):
 
 
     def read_file(self, filename):
-        bytes_buffer = io.BytesIO()
-        client.download_fileobj(Bucket=self.name, Key=filename, Fileobj=bytes_buffer)
-        byte_value = bytes_buffer.getvalue()
-        return byte_value.decode()
+        results = []
+        s3 = boto3.resource('s3')
+        obj = s3.Object(self.name, filename)
+        in_file = obj.get()['Body'].read()
+        data_df = pd.read_csv(io.BytesIO(in_file), header=0, delimiter=",", low_memory=False)
+        for index, row in data_df.dropna().iterrows():
+            results.append({"title": row['Title'], "question": row['Question'], "message":  row['Answers']})
+        return results

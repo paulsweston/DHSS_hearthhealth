@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, render_template, request
-import boto3
-import io
-import pandas as pd
 from bucket import Bucket
+from formatter import Formatter
 import json
 import uuid
 import datetime
@@ -10,6 +8,7 @@ import datetime
 application = Flask(__name__)
 
 report_bucket = Bucket()
+formatter = Formatter()
 
 @application.route("/")
 def main():
@@ -44,14 +43,9 @@ def report():
     file_id = request.args.get('id')
     results = []
     if file_id:
-        s3 = boto3.resource('s3')
-        obj = s3.Object('hearth-health-report','{0}.csv'.format(file_id))
-        in_file = obj.get()['Body'].read()
-        data_df = pd.read_csv(io.BytesIO(in_file), header=0, delimiter=",", low_memory=False)
-        data_df=data_df.dropna();
-        for index, row in data_df.iterrows():
-            print(row['Title'], row['Question'])
-            results.append({"title": row['Title'],"question": row['Question'], "message":  row['Answers']})
+        filename = '{0}.csv'.format(file_id)
+        results = report_bucket.read_file(filename)
+        print(formatter.format_answers(results))
     return render_template("report.html", results=results)
 
 @application.route('/questions', methods=['GET'])
