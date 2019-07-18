@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}chat{% endblock %}
-{% block js %}<script src="{{ url_for('static', filename='chat.js') }}"></script>{% endblock %}
+{% block js %}
+    <script src="{{ url_for('static', filename='request.js') }}"></script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+{% endblock %}
 
 {% block content %}
 
