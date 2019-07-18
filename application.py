@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from bucket import Bucket
 from formatter import Formatter
+from nlp import LanguageProcessor
 import json
 import uuid
 import datetime
@@ -9,6 +10,7 @@ application = Flask(__name__)
 
 report_bucket = Bucket()
 formatter = Formatter()
+language_processor = LanguageProcessor()
 
 @application.route("/")
 def main():
@@ -44,8 +46,13 @@ def report():
     results = []
     if file_id:
         filename = '{0}.csv'.format(file_id)
+        wordcloud = '{0}.png'.format(file_id)
         results = report_bucket.read_file(filename)
-        print(formatter.format_answers(results))
+        answers = formatter.format_answers(results)
+        language_processor.generate_word_cloud(answers, wordcloud)
+        with open(wordcloud, 'r') as f:
+            data = f.read()
+            report_bucket.write_file(wordcloud, data)
     return render_template("report.html", results=results)
 
 @application.route('/questions', methods=['GET'])
