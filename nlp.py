@@ -3,8 +3,6 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from wordcloud import WordCloud,STOPWORDS
-from matplotlib import figure
-import matplotlib.pyplot as plt
 
 
 class LanguageProcessor(object):
@@ -35,7 +33,7 @@ class LanguageProcessor(object):
 
         self._save_word_cloud(wordsFiltered, filepath, 'white')
 
-    def _is_clean(word):
+    def _is_clean(self, word):
         to_ignore = ['.', '!', '@', '#', '\'', ',']
         for item in to_ignore:
             if item in word:
@@ -54,9 +52,5 @@ class LanguageProcessor(object):
                         height=2000
                         )
         wordcloud.fit_words(word_dict)
-        f = figure.Figure( figsize =(7,7) )
-        plt.imshow(wordcloud)
-        plt.axis('off')
-        plt.show()
         wordcloud.to_file(filepath)
 
