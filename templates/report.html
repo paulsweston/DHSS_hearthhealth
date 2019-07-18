@@ -9,11 +9,31 @@
             <div id="report" class="col-md-8 ftco-animate fadInUpftco-animated report">
                 <h2>Consultation Notes</h2>
                 {% for result in results %}
-                    <h2 class="question">{{ result.title }}</h2>
-                    <p class="answer">{{ result.message }}</p>
+                    
+                    <dl class="nhsuk-summary-list">
+  <div class="nhsuk-summary-list__row">
+    <dt class="nhsuk-summary-list__key">
+      result.title
+    </dt>
+    <dd class="nhsuk-summary-list__value">
+      result.message
+    </dd>
+  </div>
+</dl>
+
                 {% endfor %}
             </div>
         </div>
     </div>
 </section>
 {% endblock %}
+<dl class="nhsuk-summary-list">
+  <div class="nhsuk-summary-list__row">
+    <dt class="nhsuk-summary-list__key">
+      Name
+    </dt>
+    <dd class="nhsuk-summary-list__value">
+      Sarah Philips
+    </dd>
+  </div>
+</dl>
