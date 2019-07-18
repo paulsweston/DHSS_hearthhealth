@@ -25,7 +25,7 @@ def account():
     reports = bucket.objects.all()
     output = []
     for report in reports:
-        if ".png" not in report.key:
+        if ".csv" in report.key:
             report_title = report.key.split("_", 1)[0]
             output.append({
                 'title': report_title,
