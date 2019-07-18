@@ -30,12 +30,17 @@ class LanguageProcessor(object):
 
         for word in data:
             if word[0] not in stopWords:
-                if ('.' not in word[1]) and ('!' not in word[1]) and not word[1].startswith('@') and not word[1].startswith('#') and not word[1].startswith('.')and not word[1].startswith("'") and not word[1].startswith(','):
+                if self._is_clean(word[1]):
                     wordsFiltered.append(ps.stem(word[0]))
 
         self._save_word_cloud(wordsFiltered, filepath, 'white')
 
-
+    def _is_clean(word):
+        to_ignore = ['.', '!', '@', '#', '\'', ',']
+        for item in to_ignore:
+            if item in word:
+                return False
+        return True
 
     def _save_word_cloud(self, data, filepath, color='black'):
         fdist = nltk.FreqDist(data)
