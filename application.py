@@ -16,7 +16,9 @@ def main():
 
 @application.route("/account")
 def account():
-    return render_template("account.html")
+    s3 = boto3.resource('s3')
+    my_bucket = s3.Bucket('hearth-health-report')
+    return render_template("account.html", obj_list=my_bucket.objects)
 
 @application.route("/basicchat")
 def basicchat():
