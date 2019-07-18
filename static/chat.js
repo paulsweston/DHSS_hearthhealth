@@ -16,7 +16,7 @@ class Chat {
             else {
                 this.questions = JSON.parse(data)
                 this._newQuestion()
-                this._disableInputs(false)
+                this.chatbox.disabled = false
             }
         })
     }
@@ -74,6 +74,7 @@ class Chat {
         elemnt.scrollIntoView(false);
     }
 
+
     _addUserResponseToChat(msg) {
         const hcard = document.createElement('div');
         var user = '<img src="/static/images/person_1.jpg" class="logo" alt="user">';
@@ -87,6 +88,8 @@ class Chat {
         li.appendChild(hcard);
         li.appendChild(body);
 
+        //Check the input value
+
         document.querySelector('#messages').append(li);
     }
 
@@ -98,16 +101,23 @@ class Chat {
 
 document.addEventListener('DOMContentLoaded', () => {
     const chat = new Chat()
-
     chat.initQuestions()
-
     document.querySelector('#send').onclick = () => {
         chat.saveUserInput()
     }
 
     document.querySelector('#message').addEventListener('keydown', (event) => {
-        if (event.keyCode === 13) {
+        var input = document.getElementById('message');
+        if (event.keyCode === 13 && input.value.length > 1) {
             chat.saveUserInput()
         }
+
+        if (input.value.length > 1){
+            document.querySelector('#send').disabled = false
+        }
+        else {
+            document.querySelector('#send').disabled = true
+        }
+
     })
 });
