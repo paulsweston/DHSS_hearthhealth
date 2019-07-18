@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 {% block title %}report{% endblock %}
-<div class="nhsuk-grid-row">
-<div class="nhsuk-grid-column-two-thirds">
-            <!--Add report items dymanically from report.js-->
-            <div id="report" class="ftco-animate fadInUpftco-animated report">
-                <h2>Consultation Notes</h2>
-                <dl class="nhsuk-summary-list">
+{%block content %}
+    <h2>Consultation Notes</h2>
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+            <dl class="nhsuk-summary-list">
                 {% for result in results %}
-                
                    <div class="nhsuk-summary-list__row">
                    <dt class="nhsuk-summary-list__key">
                     {{ result.title }}
@@ -18,9 +16,10 @@
                 </div>
                 {% endfor %}
                 </dl>
-            </div>
+        </div>
+        <div class="nhsuk-grid-column-one-third">
+  
+            <img width="400px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{image}}" />
         </div>
     </div>
-</div>
-</div>
-
+{% endblock %}
