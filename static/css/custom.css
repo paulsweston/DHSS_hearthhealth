@@ -103,7 +103,8 @@ color: #ccc;
     font-family: 'Merriweather', serif;
     font-size: 56px;
     text-transform: lowercase;
-    color: #ffffff
+    color: #ffffff;
+    background: rgba(164, 187, 185, 0.25)
 }
 
 .hm {
@@ -111,9 +112,15 @@ color: #ccc;
     font-size: 26px;
     text-transform: uppercase;
     color: #ffffff;
+    background: rgba(164, 187, 185, 0.25);
+    
 }
 
 .logo-front {
     height: "200px";
     width: "200px";
+}
+
+.new-title {
+    max-width: 35%;
 }
