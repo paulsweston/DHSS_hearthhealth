@@ -5,4 +5,4 @@ class Formatter(object):
         answers = []
         for result in results:
             answers.append(result['message'])
-        return ' '.join(answers)
+        return '. '.join(answers)
