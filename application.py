@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from bucket import Bucket
 from formatter import Formatter
 from nlp import LanguageProcessor
+from sentiment import SentimentAnalyzer
 import json
 import boto3
 import uuid
@@ -12,6 +13,7 @@ application = Flask(__name__)
 report_bucket = Bucket()
 formatter = Formatter()
 language_processor = LanguageProcessor()
+sentiment = SentimentAnalyzer()
 
 @application.route("/")
 def main():
@@ -59,11 +61,14 @@ def report():
     if file_id:
         filename = '{0}.csv'.format(file_id)
         wordcloud = '{0}.png'.format(file_id)
+        sentiment_file = '{0}-sentiment.png'.format(file_id)
         results = report_bucket.read_file(filename)
         answers = formatter.format_answers(results)
         language_processor.generate_word_cloud(answers, wordcloud)
+        sentiment.generate_sentiment_graph(answers, sentiment_file)
         report_bucket.upload_file(wordcloud)
-    return render_template("report.html", results=results, image=wordcloud)
+        report_bucket.upload_file(sentiment_file)
+    return render_template("report.html", results=results, file=file_id)
 
 @application.route('/questions', methods=['GET'])
 def send_questions_to_client():
