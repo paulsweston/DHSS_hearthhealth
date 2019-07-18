@@ -87,30 +87,15 @@
         <div class="nhsuk-grid-column-one-half">
             <h2>Previous reports</h2>
             <section class="previous reports">
-                <div class="nhsuk-promo">
-                    <a class="nhsuk-promo__link-wrapper" href="/basicchat">
-                        <div class="nhsuk-promo__content">
-                        <h3 class="nhsuk-promo__heading">Report - [DATE]</h3>
-                        <p class="nhsuk-promo__description">[SYMPTOMS_SUMMARY]</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="nhsuk-promo">
-                    <a class="nhsuk-promo__link-wrapper" href="/basicchat">
-                        <div class="nhsuk-promo__content">
-                        <h3 class="nhsuk-promo__heading">Report - [DATE]</h3>
-                        <p class="nhsuk-promo__description">[SYMPTOMS_SUMMARY]</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="nhsuk-promo">
-                    <a class="nhsuk-promo__link-wrapper" href="/basicchat">
-                        <div class="nhsuk-promo__content">
-                        <h3 class="nhsuk-promo__heading">Report - [DATE]</h3>
-                        <p class="nhsuk-promo__description">[SYMPTOMS_SUMMARY]</p>
-                        </div>
-                    </a>
-                </div>
+                {% for report in reports %}
+                    <div class="nhsuk-promo">
+                        <a class="nhsuk-promo__link-wrapper" href="/report?id={{report.link}}">
+                            <div class="nhsuk-promo__content">
+                            <h3 class="nhsuk-promo__heading">{{report.title}}</h3>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </section>
         </div>
   </div>

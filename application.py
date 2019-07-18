@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from bucket import Bucket
 from formatter import Formatter
 import json
+import boto3
 import uuid
 import datetime
 
@@ -17,8 +18,16 @@ def main():
 @application.route("/account")
 def account():
     s3 = boto3.resource('s3')
-    my_bucket = s3.Bucket('hearth-health-report')
-    return render_template("account.html", obj_list=my_bucket.objects)
+    bucket = s3.Bucket('hearth-health-report')
+    reports = bucket.objects.all()
+    output = []
+    for report in reports:
+        report_title = report.key.split("_", 1)[0]
+        output.append({
+            'title': report_title,
+            'link': report.key.replace('.csv', '')
+        })
+    return render_template("account.html", reports=output)
 
 @application.route("/basicchat")
 def basicchat():
@@ -34,7 +43,7 @@ def save_answer_to_bucket():
         csv_array.append('"{0}","{1}","{2}"'.format(item.get('title', ''), item.get('question', ''), item.get('answer', '')))
 
 
-    date = datetime.datetime.now().strftime('%Y-%m-%d')
+    date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
     file_id = '{0}_{1}'.format(date, str(uuid.uuid4()))
     filename = '{0}.csv'.format(file_id)
     response = report_bucket.write_file(filename, '\n'.join(csv_array))
