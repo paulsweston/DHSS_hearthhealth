@@ -61,10 +61,8 @@ def report():
         results = report_bucket.read_file(filename)
         answers = formatter.format_answers(results)
         language_processor.generate_word_cloud(answers, wordcloud)
-        with open(wordcloud, 'r') as f:
-            data = f.read()
-            report_bucket.write_file(wordcloud, data)
-    return render_template("report.html", results=results)
+        report_bucket.upload_file(wordcloud)
+    return render_template("report.html", results=results, image=wordcloud)
 
 @application.route('/questions', methods=['GET'])
 def send_questions_to_client():

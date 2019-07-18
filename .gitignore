@@ -5,3 +5,4 @@
 !.elasticbeanstalk/*.global.yml
 venv
 __pycache__
+nltk_data

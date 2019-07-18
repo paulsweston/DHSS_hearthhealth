@@ -9,10 +9,13 @@
             <div id="report" class="col-md-8 ftco-animate fadInUpftco-animated report">
                 <h2>Consultation Notes</h2>
                 {% for result in results %}
-                    <h2 class="question">{{ result.title }}</h2>
-                    <p class="answer">{{ result.message }}</p>
+                    {% if result.title != 'Opening' %}
+                        <h2 class="question">{{ result.title }}</h2>
+                        <p class="answer">{{ result.message }}</p>
+                    {% endif %}
                 {% endfor %}
             </div>
+            <img width="400px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{image}}" />
         </div>
     </div>
 </section>

@@ -20,3 +20,7 @@ class Bucket(object):
         for index, row in data_df.dropna().iterrows():
             results.append({"title": row['Title'], "question": row['Question'], "message":  row['Answers']})
         return results
+
+    def upload_file(self, filename):
+        s3 = boto3.resource('s3')
+        s3.meta.client.upload_file(filename, self.name, filename, ExtraArgs={'ACL':'public-read'})
