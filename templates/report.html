@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 {% block title %}report{% endblock %}
-{% block content %}
-
-<section class="ftco-section ftco-degree-bg">
-    <div class="container">
-        <div class="row">
+<div class="nhsuk-grid-row">
+<div class="nhsuk-grid-column-two-thirds">
             <!--Add report items dymanically from report.js-->
-            <div id="report" class="col-md-8 ftco-animate fadInUpftco-animated report">
+            <div id="report" class="ftco-animate fadInUpftco-animated report">
                 <h2>Consultation Notes</h2>
+                <dl class="nhsuk-summary-list">
                 {% for result in results %}
-                    {% if result.title != 'Opening' %}
-                        <h2 class="question">{{ result.title }}</h2>
-                        <p class="answer">{{ result.message }}</p>
-                    {% endif %}
+                
+                   <div class="nhsuk-summary-list__row">
+                   <dt class="nhsuk-summary-list__key">
+                    {{ result.title }}
+                  </dt>
+                  <dd class="nhsuk-summary-list__value">
+                    {{ result.message }}
+                  </dd>
+                </div>
                 {% endfor %}
+                </dl>
             </div>
-            <img width="400px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{image}}" />
         </div>
     </div>
-</section>
-{% endblock %}
+</div>
+</div>
+
