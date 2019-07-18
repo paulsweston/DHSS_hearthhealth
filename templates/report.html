@@ -1,27 +1,28 @@
 {% extends "base.html" %}
 {% block title %}report{% endblock %}
 {%block content %}
-    <h2>Consultation Notes</h2>
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-            <dl class="nhsuk-summary-list">
-                {% for result in results %}
-                   <div class="nhsuk-summary-list__row">
-                   <dt class="nhsuk-summary-list__key">
+<h2>Consultation Notes</h2>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+        <dl class="nhsuk-summary-list">
+            {% for result in results %}
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
                     {{ result.title }}
-                  </dt>
-                  <dd class="nhsuk-summary-list__value">
+                </dt>
+                <dd class="nhsuk-summary-list__value">
                     {{ result.message }}
-                  </dd>
-                </div>
-                {% endfor %}
-                </dl>
-        </div>
-        <div class="nhsuk-grid-column-one-third">
-             <h2 class="question">Word Cloud</h2>
-            <img width="400px" height="320px"src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{image}}" />
-            <h2 class="question">Sentiment Graph</h2>
-             <img width="400px" height="320px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}-sentiment.png" />
-        </div>
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
     </div>
+    <div class="nhsuk-grid-column-one-third">
+        <h2 class="nhsuk-summary-list__key">Word Cloud</h2>
+        <img width="400px" height="320px" src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}.png" />
+        <h2 class="nhsuk-summary-list__key">Sentiment Graph</h2>
+        <img width="400px" height="320px"
+            src="https://hearth-health-report.s3.eu-west-2.amazonaws.com/{{file}}-sentiment.png" />
+    </div>
+</div>
 {% endblock %}
